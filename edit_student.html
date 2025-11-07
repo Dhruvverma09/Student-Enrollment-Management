@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Student</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #fafafa;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #007BFF;
+            background-color: #f0f8ff;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 20%; /* Could be more or less, depending on screen size */
+            border-radius: 5px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Student Record</h1>
+        <form id="editStudentForm" method="POST" action="{{ url_for('edit_student', student_id=student.id) }}">
+            <label for="student_name">Student Name:</label>
+            <input type="text" id="student_name" name="student_name" value="{{ student.student_name }}" required>
+            
+            <label for="father_name">Father's Name:</label>
+            <input type="text" id="father_name" name="father_name" value="{{ student.father_name }}" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ student.email }}" required>
+            
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" value="{{ student.phone }}" pattern="[0-9]{10}" placeholder="1234567890" required>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="2" required>{{ student.address }}</textarea>
+
+            <label for="state">State:</label>
+            <select id="state" name="state" required>
+                <option value="{{ student.state }}" selected>{{ student.state }}</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="West Bengal">West Bengal</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Rajasthan">Rajasthan</option>
+            </select>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" value="{{ student.city }}" required>
+
+            <label for="pin_code">Pin Code:</label>
+            <input type="text" id="pin_code" name="pin_code" value="{{ student.pin_code }}" pattern="[0-9]{6}" required>
+
+            <label for="department">Department of Interest:</label>
+            <select id="department" name="department" required>
+                <option value="{{ student.department }}" selected>{{ student.department }}</option>
+                <option value="cs">Computer Science</option>
+                <option value="engineering">Engineering</option>
+                <option value="business">Business</option>
+                <option value="arts">Arts</option>
+                <option value="medicine">Medicine</option>
+            </select>
+            
+            <label for="course">Course:</label>
+            <select id="course" name="course" required>
+                <option value="{{ student.course }}" selected>{{ student.course }}</option>
+                <option value="MCA(AIML)">M.C.A(AIML)</option>
+                <option value="MCA">M.C.A</option>
+                <option value="MCA(CC)">M.C.A(CC)</option>
+                <option value="BCA">B.C.A</option>
+                <option value="BSC">B.S.C</option>
+            </select>
+            
+            <label for="comments">Additional Comments/Interests:</label>
+            <textarea id="comments" name="comments" rows="4">{{ student.comments }}</textarea>
+            
+            <button type="submit">Update Details</button>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p>Student record updated successfully!</p>
+            <button onclick="redirectToDashboard()">Go to Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById("successModal").style.display = "none";
+            window.location.href = "{{ url_for('admin_dashboard') }}"; // Redirect to admin dashboard
+        }
+
+        // Redirect function
+        function redirectToDashboard() {
+            window.location.href = "{{ url_for('admin_dashboard') }}"; // Redirect to admin dashboard
+        }
+
+        // Check if the session contains a success flag
+        {% if 'success' in session %}
+            document.getElementById("successModal").style.display = "block";
+            // Clear success flag after showing the modal
+            {% with %}
+                {% if 'success' in session %}
+                    {{ session.pop('success') }}
+                {% endif %}
+            {% endwith %}
+        {% endif %}
+    </script>
+</body>
+</html>

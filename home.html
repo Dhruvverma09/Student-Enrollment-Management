@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Student Enrollment System</title>
+    <style>
+        /* General reset and styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Background image with overlay for contrast */
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('static/bghome.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Centering the container */
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #f4f4f4;
+        }
+
+        /* Styling for buttons */
+        .button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            width: 220px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .button:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Student Enrollment System</h1>
+        <a href="{{ url_for('enrollment_form') }}">
+            <button class="button">Student Registration</button>
+        </a>
+        <a href="{{ url_for('admin_login') }}">
+            <button class="button">Administration Login</button>
+        </a>
+    </div>
+</body>
+</html>

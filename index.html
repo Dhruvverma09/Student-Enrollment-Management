@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background and form container styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: url('static/background.jpeg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        // City options based on selected state
+        const citiesByState = {
+            "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik"],
+            "Delhi": ["New Delhi", "Dwarka", "Rohtak"],
+            "Karnataka": ["Bengaluru", "Mysuru", "Mangalore"],
+            "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
+            "West Bengal": ["Kolkata", "Siliguri", "Durgapur"],
+            "Gujarat": ["Ahmedabad", "Surat", "Vadodara"],
+            "Uttar Pradesh": ["Lucknow", "Noida", "Agra"],
+            "Rajasthan": ["Jaipur", "Udaipur", "Jodhpur"]
+        };
+
+        // Courses by selected department
+        const coursesByDepartment = {
+            "cs": ["M.C.A (AIML)", "M.C.A", "B.C.A"],
+            "engineering": ["B.Tech", "M.Tech", "Diploma in Engineering"],
+            "business": ["BBA", "MBA", "Business Analytics"],
+            "arts": ["BA", "MA", "Fine Arts"],
+            "medicine": ["MBBS", "BDS", "B.Pharm"]
+        };
+
+        function updateCities() {
+            const stateSelect = document.getElementById('state');
+            const citySelect = document.getElementById('city');
+            const selectedState = stateSelect.value;
+
+            citySelect.innerHTML = '<option value="">Select a city</option>';
+            if (selectedState && citiesByState[selectedState]) {
+                citiesByState[selectedState].forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        }
+
+        function updateCourses() {
+            const departmentSelect = document.getElementById('department');
+            const courseSelect = document.getElementById('course');
+            const selectedDepartment = departmentSelect.value;
+
+            courseSelect.innerHTML = '<option value="">Select a course</option>';
+            if (selectedDepartment && coursesByDepartment[selectedDepartment]) {
+                coursesByDepartment[selectedDepartment].forEach(course => {
+                    const option = document.createElement('option');
+                    option.value = course;
+                    option.textContent = course;
+                    courseSelect.appendChild(option);
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Enrollment Form</h1>
+        <form id="enrollment-form" method="POST" action="/enroll">
+            <label for="student_name">Student Name:</label>
+            <input type="text" id="student_name" name="student_name" required>
+
+            <label for="father_name">Father's Name:</label>
+            <input type="text" id="father_name" name="father_name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="1234567890" required>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="2" placeholder="Enter your address" required></textarea>
+
+            <label for="state">State:</label>
+            <select id="state" name="state" required onchange="updateCities()">
+                <option value="">Select a state</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="West Bengal">West Bengal</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Rajasthan">Rajasthan</option>
+            </select>
+
+            <label for="city">City:</label>
+            <select id="city" name="city" required>
+                <option value="">Select a city</option>
+            </select>
+
+            <label for="pin_code">Pin Code:</label>
+            <input type="text" id="pin_code" name="pin_code" pattern="[0-9]{6}" placeholder="123456" required>
+
+            <label for="department">Department of Interest:</label>
+            <select id="department" name="department" required onchange="updateCourses()">
+                <option value="">Select a department</option>
+                <option value="cs">Computer Science</option>
+                <option value="engineering">Engineering</option>
+                <option value="business">Business</option>
+                <option value="arts">Arts</option>
+                <option value="medicine">Medicine</option>
+            </select>
+
+            <label for="course">Course:</label>
+            <select id="course" name="course" required>
+                <option value="">Select a course</option>
+            </select>
+
+            <label for="comments">Additional Comments/Interests:</label>
+            <textarea id="comments" name="comments" rows="4" placeholder="Enter any specific interests or additional information..."></textarea>
+
+            <button type="submit" class="button">Enroll Student</button>
+        </form>
+    </div>
+</body>
+</html>

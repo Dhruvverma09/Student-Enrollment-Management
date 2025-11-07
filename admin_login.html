@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login - Student Enrollment System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9ecef; /* Light gray background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+        }
+
+        .container {
+            background-color: #ffffff; /* White background for the form */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            width: 300px; /* Fixed width for the form */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333; /* Dark gray for the heading */
+            margin-bottom: 20px; /* Space below the heading */
+        }
+
+        label {
+            display: block; /* Block display for labels */
+            margin-bottom: 5px; /* Space below labels */
+            color: #555; /* Slightly lighter gray */
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%; /* Full width for inputs */
+            padding: 10px; /* Padding for inputs */
+            margin-bottom: 20px; /* Space below inputs */
+            border: 1px solid #ced4da; /* Light border */
+            border-radius: 5px; /* Rounded corners */
+            font-size: 14px; /* Font size for inputs */
+        }
+
+        button {
+            width: 100%; /* Full width for button */
+            padding: 10px;
+            background-color: #007BFF; /* Bootstrap primary color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .message {
+            color: red; /* Error message color */
+            text-align: center;
+            margin-top: 10px; /* Space above messages */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Login</h1>
+        <form method="POST" action="/admin/login">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Login</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="message">
+                    <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
